@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>winfruit 团队</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #1a1a1a;
+            background: linear-gradient(180deg, #f5f7ff 0%, #fdfdfd 30%, #f8faff 100%);
+            line-height: 1.9;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* ========== 超链接美化 ========== */
+        a {
+            color: #1e40af;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+        a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6);
+            transition: width 0.3s ease;
+        }
+        a:hover {
+            color: #2563eb;
+        }
+        a:hover::after {
+            width: 100%;
+        }
+        a:active {
+            color: #1e3a8a;
+        }
+
+        /* ========== 顶部头部 ========== */
+        header {
+            padding: 36px 20px 14px;
+            text-align: center;
+            background: linear-gradient(180deg, #ffffff 0%, #f5f7ff 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 120%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(59,130,246,0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(139,92,246,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .site-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .site-logo img {
+            height: 64px;
+            width: auto;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08));
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .site-logo img:hover {
+            transform: scale(1.08) rotate(-3deg);
+        }
+        .logo-text h1 {
+            font-size: 34px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .logo-text p {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #888;
+            margin-top: 4px;
+        }
+        .site-title {
+            font-size: 18px;
+            margin-top: 10px;
+            letter-spacing: 4px;
+            color: #555;
+        }
+
+        /* ========== 用户区域（右上角） ========== */
+        .user-area {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .user-area .login-btn {
+            padding: 7px 18px;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: #fff !important;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(30,64,175,0.2);
+        }
+        .user-area .login-btn::after { display: none; }
+        .user-area .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(30,64,175,0.35);
+            color: #fff !important;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            font-size: 13px;
+            color: #333;
+        }
+        .user-info .user-avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .user-info .logout-btn {
+            color: #888;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 2px 8px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            margin-left: 4px;
+        }
+        .user-info .logout-btn:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* ========== 主导航（滚动固定） ========== */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            font-size: 16px;
+            padding: 14px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s ease, background 0.3s ease, padding 0.3s ease;
+        }
+        .main-nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+        }
+        .main-nav a {
+            text-decoration: none;
+            color: #444;
+            padding: 6px 4px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            position: relative;
+            font-weight: 500;
+        }
+        .main-nav a::after {
+            display: none;
+        }
+        .main-nav a.active {
+            color: #1e3a8a;
+            border-bottom-color: #3b82f6;
+            font-weight: 600;
+        }
+        .main-nav a:hover {
+            color: #2563eb;
+            border-bottom-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        /* ========== 中间分隔小logo ========== */
+        .divider-logo {
+            text-align: center;
+            margin-bottom: 44px;
+            margin-top: 24px;
+        }
+        .divider-logo img {
+            width: 42px;
+            height: auto;
+            opacity: 0.85;
+            transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .divider-logo img:hover {
+            opacity: 1;
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        /* ========== 页面容器 ========== */
+        .page {
+            display: none;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+        .page.active {
+            display: block;
+            animation: pageIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== 滚动渐入 ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== 首页首屏 ========== */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+            padding: 30px 0;
+        }
+        .hero-image {
+            flex: 1;
+        }
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(30,64,175,0.12);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .hero-image img:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 16px 48px rgba(30,64,175,0.18);
+        }
+        .hero-text {
+            flex: 1;
+        }
+        .hero-text h2 {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: 3px;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            text-align: right;
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+        }
+        .hero-text p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-indent: 2em;
+            color: #333;
+            line-height: 2;
+        }
+
+        /* ========== 团队详情 ========== */
+        .team-section h3 {
+            text-align: center;
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-desc {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .section-subtitle {
+            text-align: center;
+            font-size: 15px;
+            margin-bottom: 30px;
+            color: #888;
+            letter-spacing: 1px;
+        }
+        .image-source {
+            text-align: right;
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 36px;
+            margin-bottom: 50px;
+        }
+        .member-card {
+            text-align: center;
+            padding: 24px 16px;
+            border-radius: 16px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
+            box-shadow: 0 4px 16px rgba(30,64,175,0.06);
+            border: 1px solid rgba(59,130,246,0.08);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(30,64,175,0.14);
+            border-color: rgba(59,130,246,0.2);
+        }
+        .member-card:hover::before {
+            transform: scaleX(1);
+        }
+        .member-avatar {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 18px;
+            overflow: hidden;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .member-card:hover .member-avatar img {
+            transform: scale(1.1);
+        }
+        .member-name {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #222;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* ========== 首页全部成员列表 ========== */
+        .all-members {
+            margin-top: 20px;
+            padding: 40px 30px 36px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 50%, #f5f0ff 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(30,64,175,0.08);
+            border: 1px solid rgba(59,130,246,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .all-members::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .all-members::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: -40px;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .all-members h4 {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 5px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+        .all-members .members-count {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+        .member-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 14px;
+            position: relative;
+            z-index: 1;
+        }
+        .member-list-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 10px 14px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(30,64,175,0.05);
+            border: 1px solid rgba(59,130,246,0.06);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: default;
+        }
+        .member-list-item:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 24px rgba(30,64,175,0.14);
+            border-color: rgba(59,130,246,0.2);
+            background: rgba(255,255,255,0.98);
+        }
+        .member-list-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 10px;
+            background: #f0f0f0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .member-list-item:hover .member-list-avatar {
+            transform: scale(1.1);
+            box-shadow: 0 5px 16px rgba(59,130,246,0.25);
+        }
+        .member-list-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .member-list-name {
+            font-size: 12px;
+            color: #333;
+            text-align: center;
+            line-height: 1.4;
+            word-break: break-all;
+            font-weight: 500;
+        }
+        .member-list-item .tag {
+            margin-top: 6px;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        /* ========== 镜像下载页面 ========== */
+        .mirror-section {
+            margin-bottom: 50px;
+        }
+        .mirror-section h3 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .mirror-desc {
+            text-align: center;
+            font-size: 15px;
+            color: #888;
+            margin-bottom: 36px;
+            letter-spacing: 1px;
+        }
+        .mirror-category {
+            margin-bottom: 40px;
+        }
+        .mirror-category h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            padding-left: 14px;
+            border-left: 4px solid;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .mirror-category h4 .cat-icon {
+            font-size: 22px;
+        }
+        .mirror-category.win h4 { border-color: #3b82f6; color: #1e40af; }
+        .mirror-category.mac h4 { border-color: #8b5cf6; color: #6d28d9; }
+        .mirror-category.linux h4 { border-color: #22c55e; color: #15803d; }
+        .mirror-category.other h4 { border-color: #f59e0b; color: #b45309; }
+        .mirror-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+        .mirror-card {
+            padding: 18px 20px;
+            background: linear-gradient(145deg, #ffffff, #f8faff);
+            border-radius: 14px;
+            box-shadow: 0 3px 14px rgba(30,64,175,0.06);
+            border: 1px solid rgba(59,130,246,0.08);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mirror-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(30,64,175,0.14);
+            border-color: rgba(59,130,246,0.2);
+        }
+        .mirror-card .mirror-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        .mirror-card .mirror-ver {
+            font-size: 12px;
+            color: #888;
+        }
+        .mirror-card .download-link {
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: #fff !important;
+            align-self: flex-start;
+            transition: all 0.3s ease;
+        }
+        .mirror-card .download-link::after { display: none; }
+        .mirror-card .download-link:hover {
+            transform: translateX(3px);
+            box-shadow: 0 4px 14px rgba(30,64,175,0.3);
+            color: #fff !important;
+        }
+        .mirror-card .download-link::before {
+            content: '↓';
+            font-weight: 700;
+        }
+        .mirror-locked {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #ffffff, #f0f4ff);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(30,64,175,0.08);
+        }
+        .mirror-locked .lock-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+        .mirror-locked h4 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 12px;
+        }
+        .mirror-locked p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 28px;
+        }
+
+        /* ========== 登录/注册弹窗 ========== */
+        .auth-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInOverlay 0.3s ease;
+        }
+        .auth-overlay.show {
+            display: flex;
+        }
+        @keyframes fadeInOverlay {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .auth-box {
+            background: #fff;
+            border-radius: 20px;
+            width: 400px;
+            max-width: 90vw;
+            padding: 36px 32px 28px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            position: relative;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .auth-close {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #999;
+            font-size: 20px;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+        }
+        .auth-close:hover {
+            background: #f3f4f6;
+            color: #333;
+        }
+        .auth-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 28px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+        .auth-tab.active {
+            color: #1e3a8a;
+            border-bottom-color: #3b82f6;
+        }
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+            animation: fadeInForm 0.3s ease;
+        }
+        @keyframes fadeInForm {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .auth-form h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #1a1a1a;
+        }
+        .auth-form .auth-sub {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 24px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 7px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+            background: #fafafa;
+        }
+        .form-group input:focus {
+            border-color: #3b82f6;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+        .auth-submit {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            margin-top: 6px;
+        }
+        .auth-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30,64,175,0.3);
+        }
+        .auth-submit:active {
+            transform: translateY(0);
+        }
+        .auth-msg {
+            text-align: center;
+            font-size: 13px;
+            margin-top: 14px;
+            min-height: 18px;
+        }
+        .auth-msg.error { color: #dc2626; }
+        .auth-msg.success { color: #16a34a; }
+
+        /* ========== 公告栏页面 ========== */
+        .notice-block {
+            margin-bottom: 70px;
+        }
+        .notice-block h3 {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: 4px;
+            color: #1a1a1a;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        .notice-block h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6, #8b5cf6);
+            border-radius: 2px;
+        }
+        .notice-empty {
+            text-align: center;
+            font-size: 16px;
+            color: #888;
+        }
+        .notice-time {
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        .notice-content {
+            max-width: 760px;
+            margin: 0 auto;
+            font-size: 16px;
+            text-indent: 2em;
+            color: #333;
+            line-height: 2.1;
+            padding: 28px 32px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(30,64,175,0.06);
+            border-left: 4px solid #3b82f6;
+            position: relative;
+        }
+        .notice-greeting {
+            font-size: 18px;
+            margin-bottom: 14px;
+            text-indent: 0;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        .notice-author {
+            text-align: right;
+            margin-top: 18px;
+            color: #666;
+            text-indent: 0;
+        }
+        .rules-content {
+            max-width: 760px;
+            margin: 0 auto;
+            font-size: 16px;
+            color: #333;
+            line-height: 2.1;
+            padding: 28px 32px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(30,64,175,0.06);
+            border-left: 4px solid #8b5cf6;
+        }
+        .rules-content p {
+            margin-bottom: 8px;
+        }
+        .rules-content strong {
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+
+        /* ========== 举报/反馈页面 ========== */
+        .form-block {
+            margin-bottom: 70px;
+        }
+        .form-block h3 {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: 4px;
+            color: #1a1a1a;
+        }
+        .form-subtitle {
+            text-align: center;
+            font-size: 15px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .contact-email {
+            text-align: center;
+            font-size: 17px;
+            padding: 32px 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #eef2ff 50%, #f5f0ff 100%);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(30,64,175,0.08);
+            border: 1px solid rgba(59,130,246,0.1);
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-email::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #8b5cf6);
+        }
+        .contact-email:hover {
+            box-shadow: 0 10px 32px rgba(30,64,175,0.14);
+            transform: translateY(-3px);
+        }
+        .contact-email a {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* ========== 加入我们页面 ========== */
+        .join-section {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .join-section h3 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 36px;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .join-condition {
+            font-size: 17px;
+            line-height: 2.2;
+            margin-bottom: 44px;
+            color: #444;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 28px 32px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(30,64,175,0.06);
+            border: 1px solid rgba(59,130,246,0.08);
+        }
+        .join-link {
+            display: inline-block;
+            font-size: 20px;
+            letter-spacing: 3px;
+            padding: 16px 52px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #8b5cf6 100%);
+            background-size: 200% 200%;
+            color: #ffffff !important;
+            border-radius: 32px;
+            box-shadow: 0 6px 24px rgba(30,64,175,0.3);
+            transition: all 0.4s ease;
+            text-decoration: none !important;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 3s ease infinite;
+        }
+        .join-link::after {
+            display: none;
+        }
+        .join-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s ease;
+        }
+        .join-link:hover {
+            color: #ffffff !important;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px rgba(30,64,175,0.4);
+        }
+        .join-link:hover::before {
+            left: 100%;
+        }
+        .join-link:active {
+            transform: translateY(-1px);
+        }
+        .join-email {
+            margin-top: 60px;
+            font-size: 15px;
+            color: #888;
+        }
+
+        /* ========== 底部防火墙状态条 ========== */
+        .firewall-bar {
+            text-align: center;
+            padding: 18px 20px;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #f0f0f0;
+            background: linear-gradient(180deg, #fafafa 0%, #f5f7ff 100%);
+            letter-spacing: 1px;
+        }
+        .firewall-bar .shield {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #4ade80, #22c55e);
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+            box-shadow: 0 0 8px rgba(34,197,94,0.6);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(34,197,94,0.6); }
+            50% { opacity: 0.6; box-shadow: 0 0 16px rgba(34,197,94,0.4); }
+        }
+
+        /* ========== 响应式适配 ========== */
+        @media (max-width: 768px) {
+            .hero-section { flex-direction: column; gap: 30px; }
+            .member-grid { grid-template-columns: 1fr; gap: 24px; }
+            .hero-text h2 { font-size: 28px; }
+            .page { padding: 0 20px 60px; }
+            .main-nav { gap: 16px; font-size: 13px; }
+            .logo-text h1 { font-size: 26px; }
+            .join-link { font-size: 17px; padding: 14px 36px; }
+            .member-list-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+            .all-members { padding: 28px 16px 24px; }
+            .all-members h4 { font-size: 22px; }
+            .user-area { top: 12px; right: 12px; }
+            .user-area .login-btn { padding: 5px 12px; font-size: 12px; }
+            .mirror-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部站点头部 -->
+    <header>
+        <div class="user-area" id="userArea">
+            <!-- 动态渲染：未登录显示登录按钮，已登录显示用户信息 -->
+        </div>
+        <div class="site-logo">
+            <img src="assets/logo.png" alt="WIN FRUIT 团队">
+            <div class="logo-text">
+                <h1>WIN FRUIT 团队</h1>
+                <p>WIN FRUIT TEAM</p>
+            </div>
+        </div>
+        <div class="site-title"></div>
+    </header>
+
+    <!-- 主导航（滚动固定） -->
+    <nav class="main-nav">
+        <a href="#" class="nav-link active" data-target="home">首页</a>
+        <a href="#" class="nav-link" data-target="notice">公告栏</a>
+        <a href="#" class="nav-link" data-target="mirror">fruit镜像</a>
+        <a href="#" class="nav-link" data-target="report">举报</a>
+        <a href="#" class="nav-link" data-target="join">加入我们</a>
+    </nav>
+
+    <!-- 分隔小logo -->
+    <div class="divider-logo">
+        <img src="assets/logo-mini.jpg" alt="">
+    </div>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 首页 -->
+        <section id="home" class="page active">
+            <div class="hero-section reveal">
+                <div class="hero-image">
+                    <img src="assets/hero-banner.png" alt="虚拟机技术插画">
+                </div>
+                <div class="hero-text">
+                    <h2>系统为基 虚拟机点亮数字之路</h2>
+                    <div class="hero-subtitle">---- windows fruit 团队</div>
+                <p>我们总想体验各式各样的系统，却受限于手里有限的硬件</p>
+                <p>虚拟机把硬件资源切割、重组，在电脑内部搭建起一个独立的世界</p>
+                <p>在这里你可以尽情封装、精简、折腾系统，不怕蓝屏崩溃，不怕弄坏真实电脑</p>
+                <p>每一次开机与销毁，都是属于技术爱好者的数字实验</p>
+                </div>
+            </div>
+
+            <div class="team-section">
+                <h3 class="reveal">团队详情</h3>
+                <p class="section-desc reveal">下面是对一些成员的介绍</p>
+                <p class="section-subtitle reveal">创始人及团队成员</p>
+                <p class="image-source reveal">（图片来源于抖音）</p>
+
+                <div class="member-grid">
+                    <div class="member-card reveal">
+                        <div class="member-avatar">
+                            <img src="assets/member-xiaoli.jpg" alt="小梨">
+                        </div>
+                        <div class="member-name">小梨 创始人</div>
+                        <a href="https://xiaolidiannaogzs.mysxl.cn/" target="_blank">点击跳转小梨的官网</a>
+                    </div>
+                    <div class="member-card reveal">
+                        <div class="member-avatar">
+                            <img src="assets/member-xiaoning.jpg" alt="小柠">
+                        </div>
+                        <div class="member-name">小柠 1.1-1.2-2.0版本创始赞助人</div>
+                        <a href="https://xiaoning.mysxl.cn/" target="_blank">点击跳转至小柠的官网</a>
+                    </div>
+                    <div class="member-card reveal">
+                        <div class="member-avatar">
+                            <img src="assets/member-yuchuan.png" alt="屿川">
+                        </div>
+                        <div class="member-name">屿川 3.0 4.0版本创始人</div>
+                        <a href="https://yuchuandngzs.mysxl.cn/" target="_blank">点击跳转屿川的官网</a>
+                    </div>
+                    <div class="member-card reveal">
+                        <div class="member-avatar">
+                            <img src="assets/member-ttsdn.png" alt="天天说电脑（限流版）">
+                        </div>
+                        <div class="member-name">天天说电脑（限流版）共创人</div>
+                        <a href="https://tiantianwindows.mysxl.cn/" target="_blank">点击跳转天天说电脑（限流版）的官网</a>
+                    </div>
+                    <div class="member-card reveal">
+                        <div class="member-avatar">
+                            <img src="assets/member-xiaoe.png" alt="Star.小俄xe（冲500粉）">
+                        </div>
+                        <div class="member-name">Star.小俄xe（冲500粉）共创人</div>
+                        <a href="https://tiantiawindows.mysxl.cn/" target="_blank">Star.小俄xe（冲500粉）的官网无</a>
+                    </div>
+                </div>
+
+                <p style="text-align: center; font-size: 16px;" class="reveal">
+                    遇到网站异常、功能建议或者想法，欢迎<a href="#report">提交反馈</a>！
+                </p>
+            </div>
+
+            <!-- 全部团队成员 -->
+            <div class="all-members reveal">
+                <h4>团队成员</h4>
+                <p class="members-count">共 25 位成员</p>
+                <div class="member-list-grid">
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/1.png" alt=""></div>
+                        <div class="member-list-name">果子搞数码</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/2.png" alt=""></div>
+                        <div class="member-list-name">苹果（大号解封版）</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/3.png" alt=""></div>
+                        <div class="member-list-name">勇敢的龙息</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/4.png" alt=""></div>
+                        <div class="member-list-name">数码小天才 LikePro</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/5.png" alt=""></div>
+                        <div class="member-list-name">Googol（原谷歌工作室）</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/6.png" alt=""></div>
+                        <div class="member-list-name">焕颜 Studio</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/7.png" alt=""></div>
+                        <div class="member-list-name">小长爱电脑（周六拍虚拟机）</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/8.png" alt=""></div>
+                        <div class="member-list-name">HQ说电脑（反阿拜多斯小鬼）</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/9.png" alt=""></div>
+                        <div class="member-list-name">尘白第一管</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/11.png" alt=""></div>
+                        <div class="member-list-name">哮喘部长苏星源（三角洲行动）</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/12.png" alt=""></div>
+                        <div class="member-list-name">xxxxxxxxxx</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/13.png" alt=""></div>
+                        <div class="member-list-name">158157679523</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/14.png" alt=""></div>
+                        <div class="member-list-name">肥美的美团袋鼠</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/15.png" alt=""></div>
+                        <div class="member-list-name">小雨说电脑(冲300粉)</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/16.png" alt=""></div>
+                        <div class="member-list-name">yuchni</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/17.png" alt=""></div>
+                        <div class="member-list-name">鲁商中央公馆二期的xu</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/20.png" alt=""></div>
+                        <div class="member-list-name">小昕的日常（朋友圈）</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/21.png" alt=""></div>
+                        <div class="member-list-name">小白电脑工作室</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/22.png" alt=""></div>
+                        <div class="member-list-name">A9陀飞轮</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/23.png" alt=""></div>
+                        <div class="member-list-name">蛋仔蓝时代（时代电脑工作室）</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/24.png" alt=""></div>
+                        <div class="member-list-name">Microsoft小杜电脑工作室</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/25.png" alt=""></div>
+                        <div class="member-list-name">kill</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/26.png" alt=""></div>
+                        <div class="member-list-name">不许人间见白头</div>
+                        <span class="tag"></span>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/27.png" alt=""></div>
+                        <div class="member-list-name">Minecraft小狐Fox（冲500粉）</div>
+                        <span class="tag"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 公告栏 -->
+        <section id="notice" class="page">
+            <div class="notice-block reveal">
+                <h3>通报栏</h3>
+                <p class="notice-empty">无</p>
+                <p class="notice-time">更新于2026.8.24 18:15</p>
+            </div>
+
+            <div class="notice-block reveal">
+                <h3>更新公告</h3>
+                <p class="section-subtitle">-4.0 winfiuit 官网更新通知</p>
+                <div class="notice-content">
+                    <p class="notice-greeting">访问 WinFruit 团队官网的用户大家好：</p>
+                    <p>本站完成了新一轮更新，调整了网站的 UI 界面，改善浏览效果，WinFruit 团队也更新了几名团队人员。官网已从sxl移到GitHub，同时修复了一些页面小问题。之后我们也会继续改进网站，感谢大家的使用与支持。</p>
+                    <p class="notice-author">winfruit 团队管理员 屿川</p>
+                </div>
+            </div>
+
+            <div class="notice-block reveal">
+                <h3>团队规则</h3>
+                <div class="rules-content">
+                    <p><strong>【群及团队公告】</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;感谢大家加入本群以及团队，本团队提倡理性交流，积极和群主互动，群主最新消息也会在本群及时发布。</p>
+                    <p><strong>【一】</strong>遵纪守法，不危害社会。为营造和谐的交流环境，特制定如下规则，望各位知悉：不散播不健康言论、敏感及消极思想，倡导和谐平台，欢迎促进进步的正能量话题讨论，违者警告一次无效者移出，禁止互相谩骂。</p>
+                    <p><strong>【二】</strong>互相尊重，不人身攻击，不因过往纠纷或意见相悖而相互攻击。</p>
+                    <p><strong>【三】</strong>相互监督，举报不良，遇行为不正或居心不良者移除本群。</p>
+                    <p><strong>【四】</strong>拉人进群，必须为支持主播的朋友，经群主或管理员审核方可进入，请相互负责；纯商家及动机不纯者请自重。</p>
+                    <p><strong>【五】</strong>本群仅作为交流电脑及其他内容的沟通平台；未经允许，禁止发布为其他主播引流的视频、链接之类，违者一次警告，二次移出。</p>
+                    <p><strong>【六】</strong>不得在群内吵架，不得辱骂诋毁他人，违反2次者移出。</p>
+                    <p><strong>【七】</strong>不得发布黄色、暴力、低级趣味的表情、信息、图片和链接等，不得发布虚假骗人信息，违者移出。</p>
+                    <p><strong>【八】</strong>不参政不议政，不得发布有政治倾向的内容，违者立即移出。</p>
+                    <p>本公告自发布之日起实施，请遵照执行，感谢大家配合。</p>
+                    <p style="text-align:right; margin-top:20px;">-winfruit 团队管理员 小柠 屿川</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- fruit镜像 -->
+        <section id="mirror" class="page">
+            <div class="mirror-section">
+                <h3 class="reveal">Fruit 镜像</h3>
+                <p class="mirror-desc reveal">系统镜像下载站 · 登录后即可获取下载链接</p>
+
+                <!-- 未登录时显示锁定提示 -->
+                <div class="mirror-locked reveal" id="mirrorLocked">
+                    <div class="lock-icon">🔒</div>
+                    <h4>此内容需要登录</h4>
+                    <p>访问 Fruit 镜像下载需要先登录账号，没有账号请先注册</p>
+                    <button class="auth-submit" style="width:auto; padding:12px 40px;" onclick="openAuth('login')">立即登录</button>
+                </div>
+
+                <!-- 登录后显示镜像内容 -->
+                <div id="mirrorContent" style="display:none;">
+                    <!-- Windows 镜像 -->
+                    <div class="mirror-category win reveal">
+                        <h4><span class="cat-icon">🪟</span> Windows 镜像</h4>
+                        <div class="mirror-grid">
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 11</div>
+                                <div class="mirror-ver">23H2 / 24H2 · 64位</div>
+                                <a href="https://www.microsoft.com/software-download/windows11" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 10</div>
+                                <div class="mirror-ver">22H2 · 64位</div>
+                                <a href="https://www.microsoft.com/software-download/windows10" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 10 LTSC</div>
+                                <div class="mirror-ver">2021 / 2024 · 64位</div>
+                                <a href="https://www.microsoft.com/evalcenter/evaluate-windows-10-enterprise" target="_blank" class="download-link">评估中心</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 11 LTSC</div>
+                                <div class="mirror-ver">2024 · 64位</div>
+                                <a href="https://www.microsoft.com/evalcenter/evaluate-windows-11-enterprise" target="_blank" class="download-link">评估中心</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows Server</div>
+                                <div class="mirror-ver">2022 / 2025</div>
+                                <a href="https://next.itellyou.cn/Original/#cbp=Product?ID=ff70d59a-8e02-ec11-a9e5-95b21d9a899a" target="_blank" class="download-link">评估中心</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 7</div>
+                                <div class="mirror-ver">SP1 · 64位</div>
+                                <a href="https://next.itellyou.cn/Original/#cbp=Product?ID=6f677346-0a09-43fa-b60d-e878ed7625a0" target="_blank" class="download-link">归档下载</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- macOS 镜像 -->
+                    <div class="mirror-category mac reveal">
+                        <h4><span class="cat-icon"></span> macOS 镜像</h4>
+                        <div class="mirror-grid">
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Sequoia</div>
+                                <div class="mirror-ver">15.x</div>
+                                <a href="https://macoshome.com/macos/80464.html" target="_blank" class="download-link">App Store</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Sonoma</div>
+                                <div class="mirror-ver">14.x</div>
+                                <a href="https://macoshome.com/macos/80465.html" target="_blank" class="download-link">App Store</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Ventura</div>
+                                <div class="mirror-ver">13.x</div>
+                                <a href="https://macoshome.com/macos/70092.html" target="_blank" class="download-link">App Store</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Monterey</div>
+                                <div class="mirror-ver">12.x</div>
+                                <a href="https://macoshome.com/macos/53941.html" target="_blank" class="download-link">支持页面</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Big Sur</div>
+                                <div class="mirror-ver">11.x</div>
+                                <a href="https://macoshome.com/macos/38381.html" target="_blank" class="download-link">支持页面</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Catalina</div>
+                                <div class="mirror-ver">10.15.x</div>
+                                <a href="https://macoshome.com/macos/3572.html" target="_blank" class="download-link">支持页面</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Linux 镜像 -->
+                    <div class="mirror-category linux reveal">
+                        <h4><span class="cat-icon">🐧</span> Linux 镜像</h4>
+                        <div class="mirror-grid">
+                            <div class="mirror-card">
+                                <div class="mirror-name">Ubuntu</div>
+                                <div class="mirror-ver">24.04 LTS / 22.04 LTS</div>
+                                <a href="https://ubuntu.com/download" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Debian</div>
+                                <div class="mirror-ver">12 (Bookworm)</div>
+                                <a href="https://www.debian.org/distrib/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">CentOS Stream</div>
+                                <div class="mirror-ver">9 / 10</div>
+                                <a href="https://www.centos.org/download/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Fedora</div>
+                                <div class="mirror-ver">40 / 41 Workstation</div>
+                                <a href="https://fedoraproject.org/workstation/download" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Arch Linux</div>
+                                <div class="mirror-ver">最新滚动版</div>
+                                <a href="https://archlinux.org/download/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Linux Mint</div>
+                                <div class="mirror-ver">22 (Wilma)</div>
+                                <a href="https://linuxmint.com/download.php" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">openSUSE</div>
+                                <div class="mirror-ver">Leap 15.6 / Tumbleweed</div>
+                                <a href="https://www.opensuse.org/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Kali Linux</div>
+                                <div class="mirror-ver">2024.x</div>
+                                <a href="https://www.kali.org/get-kali/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 其他镜像 -->
+                    <div class="mirror-category other reveal">
+                        <h4><span class="cat-icon">📦</span> 其他镜像</h4>
+                        <div class="mirror-grid">
+                            <div class="mirror-card">
+                                <div class="mirror-name">VMware Workstation</div>
+                                <div class="mirror-ver">Pro 17.x</div>
+                                <a href="https://lestore.lenovo.com/detail/21600" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">VirtualBox</div>
+                                <div class="mirror-ver">7.x</div>
+                                <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Rufus</div>
+                                <div class="mirror-ver">启动盘制作工具</div>
+                                <a href="https://rufus.ie/zh/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Ventoy</div>
+                                <div class="mirror-ver">多合一启动盘</div>
+                                <a href="https://www.ventoy.net/cn/download.html" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">balenaEtcher</div>
+                                <div class="mirror-ver">镜像烧录工具</div>
+                                <a href="https://etcher.balena.io/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">DiskGenius</div>
+                                <div class="mirror-ver">分区工具</div>
+                                <a href="https://www.diskgenius.cn/download.php" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 举报页面 -->
+        <section id="report" class="page">
+            <div class="form-block reveal">
+                <h3>举报</h3>
+                <p class="form-subtitle">举报入口</p>
+                <div class="contact-email">
+                    举报邮箱：<a href="mailto:zn1009n@163.com">zn1009n@163.com</a>
+                </div>
+            </div>
+
+            <div class="form-block reveal">
+                <h3>反馈界面</h3>
+                <p class="form-subtitle">下方进行反馈</p>
+                <div class="contact-email">
+                    反馈邮箱：<a href="mailto:xiaoren0410@163.com">xiaoren0410@163.com</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 加入我们 -->
+        <section id="join" class="page">
+            <div class="join-section">
+                <h3 class="reveal">加入 winfruit 团队</h3>
+                <div class="join-condition reveal">
+                    <p>申请条件：dy 关注小梨、小柠和屿川，dy 粉丝数达到 300 以上</p>
+                    <p>满足条件后可通过下方邮箱申请，或在主页群聊中加入</p>
+                    <p style="font-size: 15px; color: #777;">（找不到关注者看首页）</p>
+                </div>
+                <a href="mailto:zn1009n@163.com" class="join-link reveal">点击申请加入</a>
+                <div class="join-email">
+                    联系邮箱：<a href="mailto:zn1009n@163.com">zn1009n@163.com</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 登录/注册弹窗 -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-box">
+            <button class="auth-close" onclick="closeAuth()">×</button>
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">登录</div>
+                <div class="auth-tab" data-tab="register" onclick="switchAuthTab('register')">注册</div>
+            </div>
+
+            <!-- 登录表单 -->
+            <div class="auth-form active" id="loginForm">
+                <h3>欢迎回来</h3>
+                <p class="auth-sub">登录后即可访问 Fruit 镜像下载</p>
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="loginUsername" placeholder="请输入用户名" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="loginPassword" placeholder="请输入密码" autocomplete="current-password">
+                </div>
+                <button class="auth-submit" onclick="doLogin()">登 录</button>
+                <div class="auth-msg" id="loginMsg"></div>
+            </div>
+
+            <!-- 注册表单 -->
+            <div class="auth-form" id="registerForm">
+                <h3>创建账号</h3>
+                <p class="auth-sub">注册后即可解锁镜像下载权限</p>
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="regUsername" placeholder="3-20位字符" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="regPassword" placeholder="至少6位" autocomplete="new-password">
+                </div>
+                <div class="form-group">
+                    <label>确认密码</label>
+                    <input type="password" id="regPassword2" placeholder="再次输入密码" autocomplete="new-password">
+                </div>
+                <button class="auth-submit" onclick="doRegister()">注 册</button>
+                <div class="auth-msg" id="registerMsg"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 防火墙状态条 -->
+    <div class="firewall-bar">
+        <span class="shield"></span>WinFruit Firewall 已启用 · 站点受前端安全防护保护
+    </div>
+
+    <script>
+        /* ============================================================
+         * WinFruit 前端防火墙
+         * ============================================================ */
+        (function() {
+            'use strict';
+            const FW = { version: '1.1', blockedCount: 0, log: [] };
+
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                FW.blockedCount++;
+                FW.log.push({type: 'RIGHT_CLICK_BLOCKED', time: new Date().toISOString()});
+                return false;
+            });
+
+            try {
+                if (window.top !== window.self) {
+                    window.top.location = window.self.location;
+                }
+            } catch(e) {
+                window.location.href = 'about:blank';
+            }
+
+            function sanitizeURL() {
+                const dangerousPatterns = [
+                    /<script[\s>]/i, /javascript:/i, /on\w+\s*=/i,
+                    /<iframe[\s>]/i, /<object[\s>]/i, /<embed[\s>]/i,
+                    /eval\s*\(/i, /document\.cookie/i
+                ];
+                const href = window.location.href;
+                for (const pattern of dangerousPatterns) {
+                    if (pattern.test(href)) {
+                        FW.blockedCount++;
+                        FW.log.push({type: 'XSS_IN_URL', time: new Date().toISOString(), detail: href});
+                        window.location.href = window.location.pathname + window.location.hash;
+                        return false;
+                    }
+                }
+                return true;
+            }
+            sanitizeURL();
+
+            const protectedSelectors = ['header', '.main-nav', '#home', '#notice', '#mirror', '#report', '#join'];
+            const originalHTML = {};
+            protectedSelectors.forEach(sel => {
+                const el = document.querySelector(sel);
+                if (el) originalHTML[sel] = el.innerHTML;
+            });
+
+            const observer = new MutationObserver(function(mutations) {});
+            document.addEventListener('DOMContentLoaded', function() {
+                protectedSelectors.forEach(sel => {
+                    const el = document.querySelector(sel);
+                    if (el) observer.observe(el, {childList: true, characterData: true, subtree: true});
+                });
+            });
+
+            const consoleStyle = 'color: #1e3a8a; font-size: 16px; font-weight: bold;';
+            const consoleWarnStyle = 'color: #dc2626; font-size: 13px;';
+            console.log('%c⚠ WinFruit Firewall v' + FW.version, consoleStyle);
+            console.log('%c本站受前端安全防护保护，请勿在此粘贴执行不明代码。', consoleWarnStyle);
+
+            window.addEventListener('error', function(e) {
+                FW.log.push({type: 'JS_ERROR', time: new Date().toISOString(), detail: e.message});
+            });
+
+            Object.defineProperty(window, 'WinFruitFW', {
+                value: Object.freeze({
+                    version: FW.version,
+                    get blockedCount() { return FW.blockedCount; },
+                    get log() { return [...FW.log]; }
+                }),
+                writable: false,
+                configurable: false
+            });
+        })();
+
+        /* ============================================================
+         * 用户认证系统（数据存储在 localStorage 的 winfruit 命名空间下）
+         * ============================================================ */
+        const AUTH_KEY = 'winfruit_users';       // 用户数据库
+        const SESSION_KEY = 'winfruit_session';  // 当前登录会话
+
+        // 获取所有用户
+        function getUsers() {
+            try {
+                return JSON.parse(localStorage.getItem(AUTH_KEY)) || {};
+            } catch(e) {
+                return {};
+            }
+        }
+
+        // 保存用户
+        function saveUsers(users) {
+            localStorage.setItem(AUTH_KEY, JSON.stringify(users));
+        }
+
+        // 获取当前登录用户
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem(SESSION_KEY));
+            } catch(e) {
+                return null;
+            }
+        }
+
+        // 设置登录状态
+        function setSession(username) {
+            localStorage.setItem(SESSION_KEY, JSON.stringify({
+                username: username,
+                loginTime: new Date().toISOString()
+            }));
+        }
+
+        // 清除登录状态
+        function clearSession() {
+            localStorage.removeItem(SESSION_KEY);
+        }
+
+        // 渲染右上角用户区域
+        function renderUserArea() {
+            const area = document.getElementById('userArea');
+            const user = getCurrentUser();
+            if (user) {
+                const initial = user.username.charAt(0).toUpperCase();
+                area.innerHTML =
+                    '<div class="user-info">' +
+                        '<div class="user-avatar">' + initial + '</div>' +
+                        '<span>' + user.username + '</span>' +
+                        '<span class="logout-btn" onclick="doLogout()">退出</span>' +
+                    '</div>';
+            } else {
+                area.innerHTML = '<a href="javascript:void(0)" class="login-btn" onclick="openAuth(\'login\')">登录 / 注册</a>';
+            }
+        }
+
+        // 打开认证弹窗
+        function openAuth(tab) {
+            document.getElementById('authOverlay').classList.add('show');
+            switchAuthTab(tab || 'login');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭认证弹窗
+        function closeAuth() {
+            document.getElementById('authOverlay').classList.remove('show');
+            document.body.style.overflow = '';
+            // 清空表单和提示
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regPassword2').value = '';
+            document.getElementById('loginMsg').textContent = '';
+            document.getElementById('registerMsg').textContent = '';
+            document.getElementById('loginMsg').className = 'auth-msg';
+            document.getElementById('registerMsg').className = 'auth-msg';
+        }
+
+        // 切换登录/注册标签
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('.auth-tab[data-tab="' + tab + '"]').classList.add('active');
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            document.getElementById(tab + 'Form').classList.add('active');
+        }
+
+        // 登录
+        function doLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const msgEl = document.getElementById('loginMsg');
+
+            if (!username || !password) {
+                msgEl.textContent = '请填写用户名和密码';
+                msgEl.className = 'auth-msg error';
+                return;
+            }
+
+            const users = getUsers();
+            if (!users[username]) {
+                msgEl.textContent = '用户不存在，请先注册';
+                msgEl.className = 'auth-msg error';
+                return;
+            }
+
+            if (users[username].password !== password) {
+                msgEl.textContent = '密码错误';
+                msgEl.className = 'auth-msg error';
+                return;
+            }
+
+            setSession(username);
+            msgEl.textContent = '登录成功！';
+            msgEl.className = 'auth-msg success';
+            renderUserArea();
+            updateMirrorVisibility();
+
+            setTimeout(() => {
+                closeAuth();
+                // 如果当前在镜像页，刷新显示
+                const activePage = document.querySelector('.page.active');
+                if (activePage && activePage.id === 'mirror') {
+                    initReveal();
+                }
+            }, 600);
+        }
+
+        // 注册
+        function doRegister() {
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const password2 = document.getElementById('regPassword2').value;
+            const msgEl = document.getElementById('registerMsg');
+
+            if (!username || !password || !password2) {
+                msgEl.textContent = '请填写所有字段';
+                msgEl.className = 'auth-msg error';
+                return;
+            }
+
+            if (username.length < 3 || username.length > 20) {
+                msgEl.textContent = '用户名需3-20位字符';
+                msgEl.className = 'auth-msg error';
+                return;
+            }
+
+            if (password.length < 6) {
+                msgEl.textContent = '密码至少6位';
+                msgEl.className = 'auth-msg error';
+                return;
+            }
+
+            if (password !== password2) {
+                msgEl.textContent = '两次密码输入不一致';
+                msgEl.className = 'auth-msg error';
+                return;
+            }
+
+            const users = getUsers();
+            if (users[username]) {
+                msgEl.textContent = '用户名已被注册';
+                msgEl.className = 'auth-msg error';
+                return;
+            }
+
+            users[username] = {
+                password: password,
+                regTime: new Date().toISOString()
+            };
+            saveUsers(users);
+
+            msgEl.textContent = '注册成功！即将自动登录...';
+            msgEl.className = 'auth-msg success';
+
+            setTimeout(() => {
+                setSession(username);
+                renderUserArea();
+                updateMirrorVisibility();
+                closeAuth();
+                const activePage = document.querySelector('.page.active');
+                if (activePage && activePage.id === 'mirror') {
+                    initReveal();
+                }
+            }, 800);
+        }
+
+        // 登出
+        function doLogout() {
+            clearSession();
+            renderUserArea();
+            updateMirrorVisibility();
+            // 如果当前在镜像页，切回首页
+            const activePage = document.querySelector('.page.active');
+            if (activePage && activePage.id === 'mirror') {
+                switchPage('home');
+            }
+        }
+
+        // 更新镜像页可见性
+        function updateMirrorVisibility() {
+            const user = getCurrentUser();
+            const locked = document.getElementById('mirrorLocked');
+            const content = document.getElementById('mirrorContent');
+            if (user) {
+                locked.style.display = 'none';
+                content.style.display = 'block';
+            } else {
+                locked.style.display = 'block';
+                content.style.display = 'none';
+            }
+        }
+
+        /* ============================================================
+         * 页面切换逻辑
+         * ============================================================ */
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        function switchPage(targetId) {
+            // 镜像页需要登录
+            if (targetId === 'mirror' && !getCurrentUser()) {
+                openAuth('login');
+                return;
+            }
+
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(targetId).classList.add('active');
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelector('[data-target="' + targetId + '"]').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            location.hash = targetId;
+            setTimeout(() => { initReveal(); }, 50);
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const target = link.getAttribute('data-target');
+                switchPage(target);
+            });
+        });
+
+        window.addEventListener('load', () => {
+            renderUserArea();
+            updateMirrorVisibility();
+            const hash = location.hash.replace('#', '');
+            if (hash && document.getElementById(hash)) {
+                if (hash === 'mirror' && !getCurrentUser()) {
+                    switchPage('home');
+                    openAuth('login');
+                } else {
+                    switchPage(hash);
+                }
+            } else {
+                initReveal();
+            }
+        });
+
+        /* ============================================================
+         * 导航栏滚动阴影
+         * ============================================================ */
+        const mainNav = document.querySelector('.main-nav');
+        function handleNavScroll() {
+            if (window.scrollY > 10) {
+                mainNav.classList.add('scrolled');
+            } else {
+                mainNav.classList.remove('scrolled');
+            }
+        }
+        window.addEventListener('scroll', handleNavScroll, { passive: true });
+        handleNavScroll();
+
+        /* ============================================================
+         * 滚动渐入动画
+         * ============================================================ */
+        let revealObserver = null;
+        function initReveal() {
+            const reveals = document.querySelectorAll('.page.active .reveal');
+            if (!revealObserver) {
+                revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            revealObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+            }
+            reveals.forEach(el => {
+                el.classList.remove('visible');
+                revealObserver.observe(el);
+            });
+        }
+
+        // 点击遮罩层关闭弹窗
+        document.getElementById('authOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeAuth();
+        });
+
+        // 回车提交
+        document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') doLogin();
+        });
+        document.getElementById('regPassword2').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') doRegister();
+        });
+    </script>
+</body>
+</html>
