@@ -1,0 +1,911 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'">
+    <meta name="referrer" content="no-referrer">
+    <title>winfruit 团队</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=11">
+
+<style>
+.fa-hero { background: linear-gradient(135deg,#dcfce7 0%,#f0fdf4 45%,#ecfdf5 100%); border-radius:24px; padding:48px 40px; margin:20px 0 40px; position:relative; overflow:hidden; }
+.fa-hero::after { content:''; position:absolute; right:-80px; top:-80px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(17,130,63,.15),transparent 70%); }
+.fa-hero-inner { display:flex; align-items:center; gap:40px; position:relative; z-index:1; }
+.fa-hero-text { flex:1.2; }
+.fa-title { font-size:56px; font-weight:800; line-height:1.1; margin:0 0 14px; color:#122016; }
+.fa-title span { color:#0f7a3a; -webkit-text-fill-color:#0f7a3a; }
+.fa-sub { font-size:22px; font-weight:700; color:#1f2937; margin:0 0 12px; line-height:1.4; }
+.fa-desc { font-size:15px; color:#4b5563; margin:0 0 26px; line-height:1.7; }
+.fa-btns { display:flex; gap:14px; flex-wrap:wrap; }
+.fa-btns.center { justify-content:center; }
+.fa-btn { display:inline-flex; align-items:center; gap:12px; padding:14px 26px; border-radius:14px; text-decoration:none; font-weight:700; transition:transform .18s,box-shadow .18s; }
+.fa-btn:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(17,130,63,.25); }
+.fa-btn-main { background:linear-gradient(135deg,#16a34a,#11823f); color:#fff; box-shadow:0 8px 20px rgba(17,130,63,.35); }
+.fa-btn-main small { color:rgba(255,255,255,.85); }
+.fa-btn-ghost { background:#fff; color:#0d6b34; border:2px solid #bbf7d0; }
+.fa-btn-ghost small { color:#6b7280; }
+.fa-btn strong { display:block; font-size:16px; }
+.fa-btn small { display:block; font-size:12px; margin-top:2px; }
+.fa-meta { margin-top:18px; font-size:13px; color:#6b7280; }
+.fa-hero-art { flex:1; text-align:center; }
+.fa-hero-art img { max-width:100%; border-radius:20px; animation:faFloat 4s ease-in-out infinite; filter:drop-shadow(0 20px 40px rgba(17,130,63,.2)); }
+@keyframes faFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+.fa-demo-wrap { text-align:center; margin:20px 0 50px; }
+.fa-h3 { font-size:30px; font-weight:800; margin:0 0 8px; color:#111827; }
+.fa-p { color:#6b7280; margin:0 0 26px; }
+.fa-window { max-width:920px; margin:0 auto; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 24px 60px rgba(15,80,40,.18); border:1px solid #e5e7eb; text-align:left; }
+.fa-titlebar { background:#f3f4f6; padding:10px 16px; display:flex; align-items:center; gap:8px; }
+.fa-dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+.fa-dot.r{background:#ef4444;} .fa-dot.y{background:#f59e0b;} .fa-dot.g{background:#22c55e;}
+.fa-titlebar-t { margin-left:10px; font-size:13px; color:#6b7280; font-weight:600; }
+.fa-screen { display:grid; grid-template-columns:180px 1fr 240px; height:340px; }
+.fa-palette { background:#f9fafb; padding:14px; border-right:1px solid #eee; }
+.fa-pl-block { padding:9px 12px; border-radius:9px; margin-bottom:9px; font-size:13px; color:#fff; opacity:0; transform:translateX(-14px); animation:faSlideIn .5s forwards; }
+.fa-pl-block.b1{background:#ea580c; animation-delay:1.2s;}
+.fa-pl-block.b2{background:#2563eb; animation-delay:1.9s;}
+.fa-pl-block.b3{background:#7c3aed; animation-delay:2.6s;}
+.fa-pl-block.b4{background:#11823f; animation-delay:3.3s;}
+@keyframes faSlideIn { to{opacity:1; transform:translateX(0);} }
+.fa-stage { position:relative; background:#f0fdf4; overflow:hidden; }
+.fa-stage-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(17,130,63,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(17,130,63,.08) 1px,transparent 1px); background-size:36px 36px; }
+.fa-apple { position:absolute; left:40%; top:55%; font-size:34px; animation:faSquare 4s ease-in-out infinite; }
+@keyframes faSquare { 0%{transform:translate(0,0);} 25%{transform:translate(90px,0);} 50%{transform:translate(90px,-70px);} 75%{transform:translate(0,-70px);} 100%{transform:translate(0,0);} }
+.fa-bubble { position:absolute; left:38%; top:18%; background:#fff; padding:7px 12px; border-radius:12px; font-size:13px; box-shadow:0 4px 12px rgba(0,0,0,.08); animation:faBubble 4s infinite; }
+@keyframes faBubble { 0%,45%{opacity:0;} 55%,95%{opacity:1;} 100%{opacity:0;} }
+.fa-ai { background:#fefce8; padding:14px; border-left:1px solid #eee; display:flex; flex-direction:column; gap:10px; }
+.fa-ai-msgs { flex:1; }
+.fa-msg { font-size:12.5px; padding:8px 10px; border-radius:10px; margin-bottom:8px; opacity:0; animation:faMsg 5s infinite; }
+.fa-msg.user{background:#dbeafe; color:#1e40af;}
+.fa-msg.bot{background:#dcfce7; color:#166534;}
+.fa-msg.bot:last-child{animation-delay:2.2s;}
+@keyframes faMsg { 0%{opacity:0; transform:translateY(6px);} 8%{opacity:1; transform:translateY(0);} 90%{opacity:1;} 100%{opacity:0;} }
+.fa-console { background:#0f172a; color:#4ade80; font-family:Consolas,monospace; font-size:11.5px; padding:10px; border-radius:8px; line-height:1.6; }
+.fa-features { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin:0 0 50px; }
+.fa-feature { background:#fff; border-radius:16px; padding:24px; border:1px solid #e5e7eb; transition:transform .2s,box-shadow .2s; }
+.fa-feature:hover { transform:translateY(-5px); box-shadow:0 14px 30px rgba(17,130,63,.12); }
+.fa-feature h4 { margin:0 0 8px; font-size:17px; color:#111827; }
+.fa-feature p { margin:0; font-size:13.5px; color:#6b7280; line-height:1.7; }
+.fa-cta { background:linear-gradient(135deg,#11823f,#16a34a); border-radius:22px; padding:44px 30px; text-align:center; color:#fff; margin-bottom:30px; }
+.fa-cta h3 { font-size:28px; margin:0 0 10px; }
+.fa-cta p { opacity:.9; margin:0 0 24px; }
+.fa-cta .fa-btn-main { background:#fff; color:#0d6b34; box-shadow:none; }
+.fa-cta .fa-btn-ghost { background:transparent; color:#fff; border-color:rgba(255,255,255,.5); }
+@media (max-width:900px) { .fa-hero-inner{flex-direction:column;} .fa-screen{grid-template-columns:1fr; height:auto;} .fa-palette,.fa-ai{display:none;} .fa-features{grid-template-columns:1fr 1fr;} }
+</style>
+
+
+<style>
+.fa-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:0 0 50px; }
+.fa-stat { background:#fff; border:1px solid #e5e7eb; border-radius:16px; padding:22px; text-align:center; }
+.fa-stat-n { font-size:38px; font-weight:800; color:#11823f; }
+.fa-stat-t { font-size:14px; color:#6b7280; margin-top:4px; }
+.fa-how { margin-bottom:50px; }
+.fa-steps { display:flex; align-items:stretch; gap:18px; justify-content:center; }
+.fa-step { flex:1; background:#fff; border:1px solid #e5e7eb; border-radius:16px; padding:24px; position:relative; }
+.fa-step-n { position:absolute; top:-12px; left:20px; background:#11823f; color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; }
+.fa-step h4 { margin:0 0 8px; font-size:17px; }
+.fa-step p { margin:0; font-size:13.5px; color:#6b7280; line-height:1.7; }
+.fa-step-arrow { align-self:center; font-size:26px; color:#16a34a; font-weight:700; }
+.fa-cats { margin-bottom:50px; }
+.fa-cat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.fa-cat { background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:18px; transition:transform .18s,box-shadow .18s; }
+.fa-cat:hover { transform:translateY(-3px); box-shadow:0 10px 22px rgba(17,130,63,.1); }
+.fa-cat h5 { margin:0 0 6px; font-size:16px; color:#111827; }
+.fa-cat p { margin:0; font-size:12.5px; color:#6b7280; line-height:1.6; }
+.fa-demo2 { margin-bottom:50px; }
+.fa-demo2-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.fa-mini { background:#fff; border:1px solid #e5e7eb; border-radius:16px; overflow:hidden; }
+.fa-mini-t { background:#f9fafb; padding:12px 16px; font-weight:700; font-size:14px; border-bottom:1px solid #eee; }
+.fa-mini-stage { height:180px; background:#f0fdf4; position:relative; overflow:hidden; }
+.fa-spiral { position:absolute; left:50%; top:50%; width:8px; height:8px; background:#22c55e; border-radius:50%; animation:faSpiral 3s ease-in-out infinite; }
+@keyframes faSpiral {
+    0% { transform:translate(-50%,-50%) rotate(0deg) scale(1); box-shadow:0 0 0 4px #f472b6; }
+    25% { box-shadow:0 0 0 14px #a78bfa; }
+    50% { box-shadow:0 0 0 28px #60a5fa; }
+    75% { box-shadow:0 0 0 44px #fbbf24; }
+    100% { transform:translate(-50%,-50%) rotate(360deg) scale(1.2); box-shadow:0 0 0 60px #34d399; }
+}
+.fa-music-stage { display:flex; align-items:flex-end; justify-content:center; gap:14px; padding:20px; }
+.fa-note { background:linear-gradient(180deg,#fbbf24,#f59e0b); color:#fff; width:36px; text-align:center; border-radius:8px 8px 4px 4px; font-size:12px; font-weight:700; padding:18px 0 6px; animation:faNote 1.2s ease-in-out infinite; }
+.fa-note.n1{animation-delay:0s;} .fa-note.n2{animation-delay:.12s;} .fa-note.n3{animation-delay:.24s;} .fa-note.n4{animation-delay:.36s;} .fa-note.n5{animation-delay:.48s;}
+@keyframes faNote { 0%,100%{ transform:scaleY(.6);} 50%{ transform:scaleY(1.15);} }
+.fa-mini-cap { padding:10px 16px; font-size:12.5px; color:#6b7280; text-align:center; }
+.fa-faq { margin-bottom:50px; max-width:760px; margin-left:auto; margin-right:auto; }
+.fa-faq-list { display:flex; flex-direction:column; gap:10px; }
+.fa-faq-item { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:14px 18px; }
+.fa-faq-item summary { cursor:pointer; font-weight:600; font-size:15px; color:#111827; list-style:none; }
+.fa-faq-item summary::before { content:'+ '; color:#16a34a; font-weight:800; }
+.fa-faq-item[open] summary::before { content:'− '; }
+.fa-faq-item p { margin:10px 0 0; font-size:14px; color:#4b5563; line-height:1.7; }
+.fa-req { margin-bottom:40px; }
+.fa-req-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.fa-req-grid div { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:16px; }
+.fa-req-grid strong { display:block; font-size:13px; color:#16a34a; margin-bottom:4px; }
+.fa-req-grid span { font-size:14px; color:#374151; }
+@media (max-width:900px) { .fa-steps{flex-direction:column;} .fa-step-arrow{transform:rotate(90deg);} .fa-cat-grid{grid-template-columns:1fr 1fr;} .fa-demo2-grid,.fa-req-grid{grid-template-columns:1fr;} .fa-stats{grid-template-columns:1fr 1fr;} }
+</style>
+
+<style>
+/* ===== fruit编程 页：撑满全宽 ===== */
+#fruitapp.page { max-width: none !important; padding: 0 28px 60px !important; }
+#fruitapp .fa-hero { padding: 56px 64px; }
+#fruitapp .fa-hero-inner { max-width: 1400px; margin: 0 auto; }
+#fruitapp .fa-title { font-size: 64px; }
+#fruitapp .fa-hero-art img { max-width: 560px; }
+#fruitapp .fa-window { max-width: 1300px; }
+#fruitapp .fa-screen { height: 400px; }
+#fruitapp .fa-palette { grid-column: 1; }
+#fruitapp .fa-apple { left: 42%; }
+#fruitapp .fa-stats { max-width: 1300px; margin-left: auto; margin-right: auto; }
+#fruitapp .fa-steps { max-width: 1300px; margin: 0 auto; }
+#fruitapp .fa-cat-grid { grid-template-columns: repeat(4, 1fr); max-width: 1400px; margin: 0 auto; }
+#fruitapp .fa-features { max-width: 1400px; margin-left: auto; margin-right: auto; }
+#fruitapp .fa-demo2-grid { max-width: 1300px; margin: 0 auto; }
+#fruitapp .fa-faq { max-width: 1000px; }
+#fruitapp .fa-req-grid { max-width: 1300px; margin: 0 auto; }
+#fruitapp .fa-cta { max-width: 1400px; margin: 0 auto 30px; }
+@media (max-width: 1200px) { #fruitapp .fa-cat-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 900px)  { #fruitapp .fa-cat-grid { grid-template-columns: repeat(2,1fr); } #fruitapp .fa-hero-art img { max-width: 320px; } }
+</style>
+<style>
+/* 板块标题居中 */
+.fa-how, .fa-cats, .fa-demo2, .fa-faq, .fa-req { text-align: center; }
+.fa-how .fa-h3, .fa-how .fa-p, .fa-cats .fa-h3, .fa-cats .fa-p, .fa-demo2 .fa-h3, .fa-demo2 .fa-p, .fa-faq .fa-h3, .fa-req .fa-h3 { text-align: center; }
+.fa-faq-list, .fa-req-grid, .fa-steps { text-align: left; }
+.fa-steps { max-width: 1300px; margin-left: auto; margin-right: auto; }
+.fa-faq-item summary, .fa-faq-item p { text-align: left; }
+/* 全站主容器拉宽 */
+main { max-width: none !important; }
+.topbar { max-width: none !important; }
+</style>
+</head>
+<body>
+    <!-- 顶栏：logo + 导航 -->
+    <header class="topbar">
+        <div class="site-logo">
+            <img src="assets/logo.png?v=3" alt="WIN FRUIT 团队">
+            <div class="logo-text">
+                <h1>WIN FRUIT</h1>
+                <p>虚拟机 · 技术 · 交流</p>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <a href="#" class="nav-link active" data-target="home">首页</a>
+            <a href="#" class="nav-link" data-target="fruitapp">fruit编程</a>
+            <a href="#" class="nav-link" data-target="team">团队介绍</a>
+            <a href="#" class="nav-link" data-target="notice">公告栏</a>
+            <a href="#" class="nav-link" data-target="mirror">fruit镜像</a>
+            <a href="#" class="nav-link" data-target="report">举报</a>
+        </nav>
+    </header>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 首页 -->
+        <section id="home" class="page active">
+            <div class="hero-section reveal">
+                <div class="hero-image">
+                    <img src="assets/hero-banner.png" alt="虚拟机技术插画">
+                </div>
+                <div class="hero-text">
+                    <h2>把一台电脑<br>玩成一整个世界</h2>
+                    <div class="hero-subtitle">WIN FRUIT 团队</div>
+                <p>总想同时体验好几个系统，手里却只有这一台电脑？</p>
+                <p>我们用虚拟机把硬件重新切分、拼装，在你的机器里造出一个个互不打扰的小房间。</p>
+                <p>在这里装系统、拆组件、试软件，蓝屏了一键快照回滚，主力系统永远干干净净。</p>
+                <p>每一次开机与销毁，都是技术爱好者独有的数字实验。</p>
+                </div>
+            </div>
+
+            <!-- 数据统计 -->
+            <div class="stats-strip">
+                <div class="stat-item reveal">
+                    <div class="stat-num">23</div>
+                    <div class="stat-label">在册成员</div>
+                </div>
+                <div class="stat-item reveal">
+                    <div class="stat-num">5</div>
+                    <div class="stat-label">大版本迭代</div>
+                </div>
+                <div class="stat-item reveal">
+                    <div class="stat-num">24</div>
+                    <div class="stat-label">个镜像链接</div>
+                </div>
+                <div class="stat-item reveal">
+                    <div class="stat-num">4</div>
+                    <div class="stat-label">系统分类</div>
+                </div>
+            </div>
+
+            <!-- 站点索引 -->
+            <div class="index-section">
+                <h3 class="reveal">站点索引</h3>
+                <p class="section-desc reveal">常用页面，点一下就到</p>
+                <div class="index-grid">
+                    <a href="#" class="index-card reveal index-link" data-target="team">
+                        <div class="index-name">团队介绍</div>
+                        <div class="index-desc">7 位管理员和主创 + 13 人名单</div>
+                    </a>
+                    <a href="#" class="index-card reveal index-link" data-target="notice">
+                        <div class="index-name">公告栏</div>
+                        <div class="index-desc">团队规则与版本更新日志</div>
+                    </a>
+                    <a href="#" class="index-card reveal index-link" data-target="mirror">
+                        <div class="index-name">fruit 镜像</div>
+                        <div class="index-desc">Windows / macOS / Linux 下载</div>
+                    </a>
+                    <a href="#" class="index-card reveal index-link" data-target="report">
+                        <div class="index-name">举报</div>
+                        <div class="index-desc">发现违规，点这里反馈</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 技术特色 -->
+            <div class="feature-section">
+                <h3 class="reveal">我们平时在忙什么</h3>
+                <p class="section-desc reveal">四个人分工，把"折腾系统"这件事做完整</p>
+                <div class="feature-grid">
+                    <div class="feature-card reveal">
+                        <h4>系统封装</h4>
+                        <p>从原版镜像起步，删掉用不上的组件、补齐常用运行库，做出开机快、不弹窗的自用系统。</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <h4>虚拟机实验</h4>
+                        <p>在 VMware、VirtualBox 里随便造，装错了就快照回退，怎么折腾都不怕把真机搞坏。</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <h4>镜像收集</h4>
+                        <p>把 Windows、macOS、Linux 的官方和归档下载地址挑出来整理好，新人来了不用瞎找。</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <h4>安全测试</h4>
+                        <p>拿不准的小软件、没见过的版本，先扔进沙盒里跑一遍，确认没问题再碰真实系统。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 版本时间线 -->
+            <div class="timeline-section">
+                <h3 class="reveal">一路走来</h3>
+                <p class="section-desc reveal">从一个临时搭的页面，到现在这个团队站</p>
+                <div class="timeline">
+                    <div class="tl-item reveal">
+                        <div class="tl-dot"></div>
+                        <div class="tl-body">
+                            <div class="tl-ver">v1.1 · 起步</div>
+                            <p>在「上线了」上用模板凑了个简单页面，小柠赞助了第一笔，交流群跟着建起来。</p>
+                        </div>
+                    </div>
+                    <div class="tl-item reveal">
+                        <div class="tl-dot"></div>
+                        <div class="tl-body">
+                            <div class="tl-ver">v1.2 · 聚人</div>
+                            <p>还在用「上线了」改样式，陆续来了第一批做电脑内容的朋友，镜像资源开始成体系。</p>
+                        </div>
+                    </div>
+                    <div class="tl-item reveal">
+                        <div class="tl-dot"></div>
+                        <div class="tl-body">
+                            <div class="tl-ver">v2.0 · 立规</div>
+                            <p>群规正式写下来，什么能聊、什么不能发都讲清楚，团队才算真正转起来。</p>
+                        </div>
+                    </div>
+                    <div class="tl-item reveal">
+                        <div class="tl-dot"></div>
+                        <div class="tl-body">
+                            <div class="tl-ver">v3.0 · 重建</div>
+                            <p>屿川接手，官网推倒重做，统一了页面风格，镜像下载和举报反馈一起上线。</p>
+                        </div>
+                    </div>
+                    <div class="tl-item reveal">
+                        <div class="tl-dot"></div>
+                        <div class="tl-body">
+                            <div class="tl-ver">v4.0 · 现在</div>
+                            <p>整站搬到 GitHub，换成浅色玻璃界面，成员也扩充到二十多人。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="team" class="page">
+            <div class="team-section">
+                <h3 class="reveal">团队详情</h3>
+                <p class="section-desc reveal">下面是对一些成员的介绍</p>
+                <p class="section-subtitle reveal">创始人及团队成员</p>
+                <p class="image-source reveal">（图片来源于抖音）</p>
+
+                <!-- 创始人（大头像卡片） -->
+                <div class="member-grid">
+                    <div class="member-card reveal">
+                        <div class="member-avatar">
+                            <img src="assets/member-xiaoli.jpg" alt="小梨">
+                        </div>
+                        <div class="member-name">小梨<span class="member-role">创始人</span></div>
+                        <a href="https://xiaolidiannaogzs.mysxl.cn/" target="_blank">点击跳转小梨的官网</a>
+                    </div>
+                    <div class="member-card reveal">
+                        <div class="member-avatar">
+                            <img src="assets/member-yuchuan.png" alt="屿川">
+                        </div>
+                        <div class="member-name">屿川<span class="member-role">共创人</span></div>
+                        <a href="https://yuchuandngzs.mysxl.cn/" target="_blank">点击跳转屿川的官网</a>
+                    </div>
+                    <div class="member-card reveal">
+                        <div class="member-avatar">
+                            <img src="assets/member-xiaoning.jpg" alt="小柠">
+                        </div>
+                        <div class="member-name">小柠<span class="member-role">共创人</span></div>
+                        <a href="https://xiaoning.mysxl.cn/" target="_blank">点击跳转小柠的官网</a>
+                    </div>
+                </div>
+
+                <!-- 管理员（竖卡片） -->
+                <p class="section-subtitle reveal">管理员</p>
+                <div class="admin-grid">
+                    <div class="admin-card reveal">
+                        <div class="admin-img"><img src="assets/member-danzai.jpg" alt="蛋仔蓝时代"></div>
+                        <div class="admin-name">蛋仔蓝时代</div>
+                        <div class="admin-tag">管理员</div>
+                        <a href="#">官网待补充</a>
+                    </div>
+                    <div class="admin-card reveal">
+                        <div class="admin-img"><img src="assets/member-ttsdn2.png" alt="天天说电脑"></div>
+                        <div class="admin-name">天天说电脑</div>
+                        <div class="admin-tag">管理员</div>
+                        <a href="#">官网待补充</a>
+                    </div>
+                    <div class="admin-card reveal">
+                        <div class="admin-img"><img src="assets/member-wenwen2.jpg" alt="文文说电脑"></div>
+                        <div class="admin-name">文文说电脑</div>
+                        <div class="admin-tag">管理员</div>
+                        <a href="#">官网待补充</a>
+                    </div>
+                    <div class="admin-card reveal">
+                        <div class="admin-img"><img src="assets/member-wangjinyu.jpg" alt="妄禁欲"></div>
+                        <div class="admin-name">妄禁欲</div>
+                        <div class="admin-tag">管理员</div>
+                        <a href="#">官网待补充</a>
+                    </div>
+                </div>
+
+                <p style="text-align: center; font-size: 16px;" class="reveal">
+                    遇到网站异常、功能建议或者想法，欢迎提交反馈！
+                </p>
+            </div>
+
+            <!-- 全部团队成员 -->
+            <div class="all-members reveal">
+                <h4>团队成员</h4>
+                <p class="members-count">共 13 位成员</p>
+                <div class="member-list-grid">
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m1.png" alt=""></div>
+                        <div class="member-list-name">Microsoft杜.du搞电脑</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m2.png" alt=""></div>
+                        <div class="member-list-name">鹦鹉钳(电子斗蛐蛐版)</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m3.png" alt=""></div>
+                        <div class="member-list-name">冷却</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m14.jpg" alt=""></div>
+                        <div class="member-list-name">winZX工作室（破500粉）</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m5.png" alt=""></div>
+                        <div class="member-list-name">yuchni🐾</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m6.png" alt=""></div>
+                        <div class="member-list-name">春天（金甲搏击主理人）求1万粉丝</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m7.png" alt=""></div>
+                        <div class="member-list-name">未解</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m8.png" alt=""></div>
+                        <div class="member-list-name">Microsoft说电脑（开学不更）</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m9.png" alt=""></div>
+                        <div class="member-list-name">天小灰（多重人格）</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m10.png" alt=""></div>
+                        <div class="member-list-name">Microsoft</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m11.png" alt=""></div>
+                        <div class="member-list-name">昭</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m12.png" alt=""></div>
+                        <div class="member-list-name">玄琛</div>
+                    </div>
+                    <div class="member-list-item">
+                        <div class="member-list-avatar"><img src="assets/sidebar/m13.png" alt=""></div>
+                        <div class="member-list-name">A9陀飞轮</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 公告栏 -->
+        <section id="notice" class="page">
+            <div class="notice-block reveal">
+                <h3>团队规则</h3>
+                <div class="rules-content">
+                    <p><strong>【群及团队公告】</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;感谢大家加入本群以及团队，本团队提倡理性交流，积极和群主互动，群主最新消息也会在本群及时发布。</p>
+                    <p><strong>【一】</strong>遵纪守法，不危害社会。为营造和谐的交流环境，特制定如下规则，望各位知悉：不散播不健康言论、敏感及消极思想，倡导和谐平台，欢迎促进进步的正能量话题讨论，违者警告一次无效者移出，禁止互相谩骂。</p>
+                    <p><strong>【二】</strong>互相尊重，不人身攻击，不因过往纠纷或意见相悖而相互攻击。</p>
+                    <p><strong>【三】</strong>相互监督，举报不良，遇行为不正或居心不良者移除本群。</p>
+                    <p><strong>【四】</strong>拉人进群，必须为支持主播的朋友，经群主或管理员审核方可进入，请相互负责；纯商家及动机不纯者请自重。</p>
+                    <p><strong>【五】</strong>本群仅作为交流电脑及其他内容的沟通平台；未经允许，禁止发布为其他主播引流的视频、链接之类，违者一次警告，二次移出。</p>
+                    <p><strong>【六】</strong>不得在群内吵架，不得辱骂诋毁他人，违反2次者移出。</p>
+                    <p><strong>【七】</strong>不得发布黄色、暴力、低级趣味的表情、信息、图片和链接等，不得发布虚假骗人信息，违者移出。</p>
+                    <p><strong>【八】</strong>不参政不议政，不得发布有政治倾向的内容，违者立即移出。</p>
+                    <p>本公告自发布之日起实施，请遵照执行，感谢大家配合。</p>
+                    <p style="text-align:right; margin-top:20px;">-winfruit 团队管理员 小柠 屿川</p>
+                </div>
+            </div>
+
+            <div class="notice-block reveal">
+                <h3>更新日志</h3>
+                <p class="section-subtitle">- 本站近期改动记录</p>
+                <div class="changelog">
+                    <div class="cl-item">
+                        <div class="cl-ver">v4.1 · 2026.9.19</div>
+                        <ul>
+                            <li>整体界面重做：浅色液态玻璃风格，卡片带顶部高光与悬停浮起。</li>
+                            <li>导航栏改为胶囊样式，「首页」居中，切页即时跳转。</li>
+                            <li>团队人员介绍独立为「团队介绍」页，首页只保留首屏与新内容。</li>
+                            <li>首页新增「我们在做什么」四张特色卡片与「版本演进」时间线。</li>
+                            <li>F12 等开发者快捷键改为弹出开发密码验证，仅管理员可放行。</li>
+                            <li>公告栏精简为通报栏、更新日志、团队规则三块。</li>
+                            <li>引入 Inter 字体，替换默认系统字体，排版更清爽。</li>
+                            <li>移除原「加入我们」入口。</li>
+                        </ul>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-ver">v4.0 · 2026.8.24</div>
+                        <ul>
+                            <li>官网从 sxl（上线了）迁移到 GitHub Pages，摆脱模板限制。</li>
+                            <li>整体 UI 重构为 Fluent 浅色风格，统一圆角与阴影语言。</li>
+                            <li>新增 fruit 镜像下载页，按 Windows / macOS / Linux / 工具分类。</li>
+                            <li>上线举报与反馈邮箱入口，补充团队规则。</li>
+                            <li>团队成员扩充至二十余人，成员墙上线。</li>
+                        </ul>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-ver">v3.0 · 2026.6</div>
+                        <ul>
+                            <li>官网重建，统一导航与页面切换逻辑。</li>
+                            <li>加入滚动渐入动画与滚动固定导航。</li>
+                            <li>新增公告栏，开始用网页形式发布通知。</li>
+                        </ul>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-ver">v2.0 · 2026.4</div>
+                        <ul>
+                            <li>团队规则成文，八条规则发布。</li>
+                            <li>交流群与团队正式并行运作，开始有节奏地整理镜像资源。</li>
+                        </ul>
+                    </div>
+                    <div class="cl-item">
+                        <div class="cl-ver">v1.x · 2026 年初</div>
+                        <ul>
+                            <li>最初在「上线了」(sxl.cn) 上简单建了个页面。</li>
+                            <li>小柠赞助起步，吸引第一批做电脑内容的创作者。</li>
+                            <li>交流群成立，团队雏形出现。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- fruit镜像 -->
+        <section id="mirror" class="page">
+            <div class="mirror-section">
+                <h3 class="reveal">Fruit 镜像</h3>
+                <p class="mirror-desc reveal">系统镜像下载站 · 精选下载链接</p>
+
+                <!-- 镜像内容 -->
+                <div id="mirrorContent">
+                    <!-- Windows 镜像 -->
+                    <div class="mirror-category win reveal">
+                        <h4><span class="cat-icon">🪟</span> Windows 镜像</h4>
+                        <div class="mirror-grid">
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 11</div>
+                                <div class="mirror-ver">23H2 / 24H2 · 64位</div>
+                                <a href="https://www.microsoft.com/software-download/windows11" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 10</div>
+                                <div class="mirror-ver">22H2 · 64位</div>
+                                <a href="https://www.microsoft.com/software-download/windows10" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 10 LTSC</div>
+                                <div class="mirror-ver">2021 / 2024 · 64位</div>
+                                <a href="https://www.microsoft.com/evalcenter/evaluate-windows-10-enterprise" target="_blank" class="download-link">评估中心</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 11 LTSC</div>
+                                <div class="mirror-ver">2024 · 64位</div>
+                                <a href="https://www.microsoft.com/evalcenter/evaluate-windows-11-enterprise" target="_blank" class="download-link">评估中心</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows Server</div>
+                                <div class="mirror-ver">2022 / 2025</div>
+                                <a href="https://next.itellyou.cn/Original/#cbp=Product?ID=ff70d59a-8e02-ec11-a9e5-95b21d9a899a" target="_blank" class="download-link">评估中心</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Windows 7</div>
+                                <div class="mirror-ver">SP1 · 64位</div>
+                                <a href="https://next.itellyou.cn/Original/#cbp=Product?ID=6f677346-0a09-43fa-b60d-e878ed7625a0" target="_blank" class="download-link">归档下载</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- macOS 镜像 -->
+                    <div class="mirror-category mac reveal">
+                        <h4><span class="cat-icon">🍏</span> macOS 镜像</h4>
+                        <div class="mirror-grid">
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Sequoia</div>
+                                <div class="mirror-ver">15.x</div>
+                                <a href="https://macoshome.com/macos/80464.html" target="_blank" class="download-link">App Store</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Sonoma</div>
+                                <div class="mirror-ver">14.x</div>
+                                <a href="https://macoshome.com/macos/80465.html" target="_blank" class="download-link">App Store</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Ventura</div>
+                                <div class="mirror-ver">13.x</div>
+                                <a href="https://macoshome.com/macos/70092.html" target="_blank" class="download-link">App Store</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Monterey</div>
+                                <div class="mirror-ver">12.x</div>
+                                <a href="https://macoshome.com/macos/53941.html" target="_blank" class="download-link">支持页面</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Big Sur</div>
+                                <div class="mirror-ver">11.x</div>
+                                <a href="https://macoshome.com/macos/38381.html" target="_blank" class="download-link">支持页面</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">macOS Catalina</div>
+                                <div class="mirror-ver">10.15.x</div>
+                                <a href="https://macoshome.com/macos/3572.html" target="_blank" class="download-link">支持页面</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Linux 镜像 -->
+                    <div class="mirror-category linux reveal">
+                        <h4><span class="cat-icon">🐧</span> Linux 镜像</h4>
+                        <div class="mirror-grid">
+                            <div class="mirror-card">
+                                <div class="mirror-name">Ubuntu</div>
+                                <div class="mirror-ver">24.04 LTS / 22.04 LTS</div>
+                                <a href="https://ubuntu.com/download" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Debian</div>
+                                <div class="mirror-ver">12 (Bookworm)</div>
+                                <a href="https://www.debian.org/distrib/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">CentOS Stream</div>
+                                <div class="mirror-ver">9 / 10</div>
+                                <a href="https://www.centos.org/download/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Fedora</div>
+                                <div class="mirror-ver">40 / 41 Workstation</div>
+                                <a href="https://fedoraproject.org/workstation/download" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Arch Linux</div>
+                                <div class="mirror-ver">最新滚动版</div>
+                                <a href="https://archlinux.org/download/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Linux Mint</div>
+                                <div class="mirror-ver">22 (Wilma)</div>
+                                <a href="https://linuxmint.com/download.php" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">openSUSE</div>
+                                <div class="mirror-ver">Leap 15.6 / Tumbleweed</div>
+                                <a href="https://www.opensuse.org/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Kali Linux</div>
+                                <div class="mirror-ver">2024.x</div>
+                                <a href="https://www.kali.org/get-kali/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 其他镜像 -->
+                    <div class="mirror-category other reveal">
+                        <h4><span class="cat-icon">📦</span> 其他镜像</h4>
+                        <div class="mirror-grid">
+                            <div class="mirror-card">
+                                <div class="mirror-name">VMware Workstation</div>
+                                <div class="mirror-ver">Pro 17.x</div>
+                                <a href="https://lestore.lenovo.com/detail/21600" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">VirtualBox</div>
+                                <div class="mirror-ver">7.x</div>
+                                <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Rufus</div>
+                                <div class="mirror-ver">启动盘制作工具</div>
+                                <a href="https://rufus.ie/zh/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">Ventoy</div>
+                                <div class="mirror-ver">多合一启动盘</div>
+                                <a href="https://www.ventoy.net/cn/download.html" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">balenaEtcher</div>
+                                <div class="mirror-ver">镜像烧录工具</div>
+                                <a href="https://etcher.balena.io/" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                            <div class="mirror-card">
+                                <div class="mirror-name">DiskGenius</div>
+                                <div class="mirror-ver">分区工具</div>
+                                <a href="https://www.diskgenius.cn/download.php" target="_blank" class="download-link">官方下载</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 举报页面 -->
+        <section id="report" class="page">
+            <div class="form-block reveal">
+                <h3>举报</h3>
+                <p class="form-subtitle">举报入口</p>
+                <div class="contact-email">
+                    举报邮箱：<a href="mailto:zn1009n@163.com">zn1009n@163.com</a>
+                </div>
+            </div>
+
+            <div class="form-block reveal">
+                <h3>反馈界面</h3>
+                <p class="form-subtitle">下方进行反馈</p>
+                <div class="contact-email">
+                    反馈邮箱：<a href="mailto:xiaoren0410@163.com">xiaoren0410@163.com</a>
+                </div>
+            </div>
+        </section>
+    
+        <!-- ============ fruit编程 下载页 ============ -->
+        <section id="fruitapp" class="page">
+            <div class="fa-hero">
+                <div class="fa-hero-inner">
+                    <div class="fa-hero-text">
+                        <h2 class="fa-title">fruit<span>编程</span></h2>
+                        <p class="fa-sub">Windows 上的积木编程软件，<br>AI 可以帮你搭积木、跑程序</p>
+                        <p class="fa-desc">对它说一句话，它就在软件里把积木拼好、运行、画出图案。<br>193 个积木，本地运行，不会上传你的程序。</p>
+                        <div class="fa-btns">
+                            <a href="https://wwbej.lanzoum.com/iUOkP49ac6if" target="_blank" class="fa-btn fa-btn-main">
+                                <span><strong>下载安装版</strong><small>正常安装包，蓝奏云密码 d4fx</small></span>
+                            </a>
+                            <a href="https://wwbej.lanzoum.com/iDlbq49ac9di" target="_blank" class="fa-btn fa-btn-ghost">
+                                <span><strong>便携版</strong><small>解压就能用，蓝奏云密码 6diu</small></span>
+                            </a>
+                        </div>
+                        <div class="fa-meta">需要 Windows 10/11，AI 功能要自己填 API Key</div>
+                    </div>
+                    <div class="fa-hero-art">
+                        <img src="assets/fruit-promo.png" alt="fruit编程 宣传图">
+                    </div>
+                </div>
+            </div>
+
+            <div class="fa-demo-wrap">
+                <h3 class="fa-h3">怎么用</h3>
+                <p class="fa-p">说句话，AI 把积木拼好</p>
+                <div class="fa-window">
+                    <div class="fa-titlebar">
+                        <span class="fa-dot r"></span><span class="fa-dot y"></span><span class="fa-dot g"></span>
+                        <span class="fa-titlebar-t">fruit编程</span>
+                    </div>
+                    <div class="fa-screen">
+                        <div class="fa-palette">
+                            <div class="fa-pl-block b1">重复 4 次</div>
+                            <div class="fa-pl-block b2">移动 60 步</div>
+                            <div class="fa-pl-block b3">右转 90 度</div>
+                            <div class="fa-pl-block b4">说"画好啦"</div>
+                        </div>
+                        <div class="fa-stage">
+                            <div class="fa-stage-grid"></div>
+                            <div class="fa-apple">🍎</div>
+                            <div class="fa-bubble">画一个正方形</div>
+                        </div>
+                        <div class="fa-ai">
+                            <div class="fa-ai-msgs">
+                                <div class="fa-msg user">帮我画个正方形并运行</div>
+                                <div class="fa-msg bot">好，我来搭积木</div>
+                                <div class="fa-msg bot">拼好了，开始运行</div>
+                            </div>
+                            <div class="fa-console">&gt; 程序开始运行<br>&gt; 角色说：画好啦<br>&gt; 运行结束</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fa-features">
+                <div class="fa-feature">
+                    <h4>193 个积木</h4>
+                    <p>运动、画笔、声音、变量、运算、AI……像 Scratch 一样拼，一共 11 大类。</p>
+                </div>
+                <div class="fa-feature">
+                    <h4>AI 能直接操作</h4>
+                    <p>不只是聊天。说一句"画个彩虹螺旋"，它会自己拼好积木、点运行，舞台上直接出结果。</p>
+                </div>
+                <div class="fa-feature">
+                    <h4>程序在本地跑</h4>
+                    <p>积木文件存在你自己电脑上。AI 请求只发到你自己填的模型接口，不会上传程序。</p>
+                </div>
+                <div class="fa-feature">
+                    <h4>真发声、真画线</h4>
+                    <p>角色会在画布上留下笔迹，音符也真的会响——不是演示动画，是程序真的在跑。</p>
+                </div>
+            </div>
+
+            
+            <!-- 数据统计条 -->
+            <div class="fa-stats">
+                <div class="fa-stat"><div class="fa-stat-n">193</div><div class="fa-stat-t">个积木</div></div>
+                <div class="fa-stat"><div class="fa-stat-n">11</div><div class="fa-stat-t">大分类</div></div>
+                <div class="fa-stat"><div class="fa-stat-n">3</div><div class="fa-stat-t">步开始用</div></div>
+                <div class="fa-stat"><div class="fa-stat-n">0</div><div class="fa-stat-t">程序上传</div></div>
+            </div>
+
+            <!-- 三步上手 -->
+            <div class="fa-how">
+                <h3 class="fa-h3">三步开始</h3>
+                <p class="fa-p">不用学语法，也不用配环境</p>
+                <div class="fa-steps">
+                    <div class="fa-step">
+                        <div class="fa-step-n">1</div>
+                        <h4>下载安装</h4>
+                        <p>安装版一路下一步就行，懒得装就用便携版，解压后直接打开。</p>
+                    </div>
+                    <div class="fa-step-arrow">→</div>
+                    <div class="fa-step">
+                        <div class="fa-step-n">2</div>
+                        <h4>填 API Key</h4>
+                        <p>在设置里粘贴你自己的模型 Key，默认是 DeepSeek，充几块钱能用很久。</p>
+                    </div>
+                    <div class="fa-step-arrow">→</div>
+                    <div class="fa-step">
+                        <div class="fa-step-n">3</div>
+                        <h4>直接说需求</h4>
+                        <p>在 AI 框里说"画个彩虹螺旋"，积木会自动拼好并运行，舞台上直接出结果。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 积木分类一览 -->
+            <div class="fa-cats">
+                <h3 class="fa-h3">积木分 11 类，共 193 个</h3>
+                <p class="fa-p">都是 Scratch 那一套用法</p>
+                <div class="fa-cat-grid">
+                    <div class="fa-cat"><h5>事件</h5><p>开始运行 · 按键 · 收到消息 · 碰到边缘</p></div>
+                    <div class="fa-cat"><h5>控制</h5><p>重复 · 永远循环 · 如果 · 重复直到 · 等待</p></div>
+                    <div class="fa-cat"><h5>运动</h5><p>移动 · 转向 · 滑行 · 反弹 · 面朝向 · 转圈</p></div>
+                    <div class="fa-cat"><h5>外观</h5><p>说 · 思考 · 造型 · 大小 · 特效 · 背景</p></div>
+                    <div class="fa-cat"><h5>声音</h5><p>蜂鸣 · 音符 · 音阶 · 敲鼓 · 喵叫（真发声）</p></div>
+                    <div class="fa-cat"><h5>侦测</h5><p>询问 · 鼠标位置 · 随机数 · 计时器 · 距离</p></div>
+                    <div class="fa-cat"><h5>运算</h5><p>加减乘除 · 三角函数 · 字符串 · 比较</p></div>
+                    <div class="fa-cat"><h5>变量</h5><p>设值 · 自增自减 · 交换 · 列表 · 随机</p></div>
+                    <div class="fa-cat"><h5>画笔</h5><p>落笔 · 抬笔 · 颜色 · 粗细 · 写字 · 橡皮擦（真画线）</p></div>
+                    <div class="fa-cat"><h5>消息</h5><p>广播 · 广播并等待 · 弹窗 · 发送给所有人</p></div>
+                    <div class="fa-cat"><h5>AI</h5><p>问答 · 画图 · 讲故事 · 翻译 · 找错 · 生成代码</p></div>
+                </div>
+            </div>
+
+            <!-- 第二个动画演示 -->
+            <div class="fa-demo2">
+                <h3 class="fa-h3">画线和声音都是实时的</h3>
+                <p class="fa-p">不是录屏，下面是程序跑出来的效果</p>
+                <div class="fa-demo2-grid">
+                    <div class="fa-mini">
+                        <div class="fa-mini-t">画一个彩虹螺旋</div>
+                        <div class="fa-mini-stage">
+                            <div class="fa-spiral"></div>
+                        </div>
+                        <div class="fa-mini-cap">画笔积木一边循环移动一边换颜色</div>
+                    </div>
+                    <div class="fa-mini">
+                        <div class="fa-mini-t">弹一段音阶</div>
+                        <div class="fa-mini-stage fa-music-stage">
+                            <div class="fa-note n1">do</div><div class="fa-note n2">re</div><div class="fa-note n3">mi</div><div class="fa-note n4">fa</div><div class="fa-note n5">sol</div>
+                        </div>
+                        <div class="fa-mini-cap">音符积木按顺序触发 WebAudio 发声</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="fa-faq">
+                <h3 class="fa-h3">常见问题</h3>
+                <div class="fa-faq-list">
+                    <details class="fa-faq-item">
+                        <summary>需要花钱吗？</summary>
+                        <p>软件完全免费。AI 功能需要你自己填一个模型 API Key（比如 DeepSeek，充几块钱能用几十次），不用 AI 功能也能拖积木编程。</p>
+                    </details>
+                    <details class="fa-faq-item">
+                        <summary>支持什么模型？</summary>
+                        <p>所有兼容 OpenAI 格式的接口都能填：DeepSeek、通义千问、Kimi、OpenAI、本地 Ollama……改一下接口地址就行。</p>
+                    </details>
+                    <details class="fa-faq-item">
+                        <summary>我的代码/程序会上传吗？</summary>
+                        <p>不会。积木程序存在你自己电脑上，只有你让 AI 帮忙的时候，当前那段文字才发到你配置的模型接口。</p>
+                    </details>
+                    <details class="fa-faq-item">
+                        <summary>和 Scratch 有什么区别？</summary>
+                        <p>Scratch 是网页版、要上传作品；fruit编程 是 Windows 桌面软件，AI 能直接替你搭积木、跑程序，还能生成 Python 代码。</p>
+                    </details>
+                    <details class="fa-faq-item">
+                        <summary>不会编程能用吗？</summary>
+                        <p>能。你只要用中文说想做什么，AI 负责搭积木。你也可以自己拖积木玩。</p>
+                    </details>
+                </div>
+            </div>
+
+            <!-- 系统要求 -->
+            <div class="fa-req">
+                <h3 class="fa-h3">下载信息</h3>
+                <div class="fa-req-grid">
+                    <div><strong>系统</strong><span>Windows 10 / 11（64 位）</span></div>
+                    <div><strong>版本</strong><span>2.3.0</span></div>
+                    <div><strong>联网</strong><span>只有 AI 功能需要</span></div>
+                    <div><strong>安装</strong><span>安装包或便携版都行</span></div>
+                </div>
+            </div>
+
+<div class="fa-cta">
+                <h3>下载试试</h3>
+                <p>装好以后对它说一句"帮我画一个正方形"，看它自己忙活。</p>
+                <div class="fa-btns center">
+                    <a href="https://wwbej.lanzoum.com/iUOkP49ac6if" target="_blank" class="fa-btn fa-btn-main">下载安装版</a>
+                    <a href="https://wwbej.lanzoum.com/iDlbq49ac9di" target="_blank" class="fa-btn fa-btn-ghost">便携版</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 防火墙状态条 -->
+    <div class="firewall-bar">
+        <span class="shield"></span>本站开了前端防护：右键和 F12 会被拦
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
