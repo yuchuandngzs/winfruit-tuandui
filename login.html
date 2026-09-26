@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 - WIN FRUIT</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(150deg, #ecfdf5 0%, #d1fae5 48%, #a7f3d0 100%);
+  position: relative; overflow: hidden;
+}
+body::before {
+  content: ""; position: absolute; width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(134,239,172,.5), transparent 70%);
+  top: -160px; right: -120px; filter: blur(40px);
+}
+body::after {
+  content: ""; position: absolute; width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.75), transparent 70%);
+  bottom: -140px; left: -100px; filter: blur(50px);
+}
+
+.login-card {
+  position: relative; z-index: 2;
+  width: 420px;
+  background: rgba(255,255,255,.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.9);
+  border-radius: 26px;
+  padding: 38px 40px 32px;
+  box-shadow: 0 24px 70px rgba(6, 78, 59, .22);
+}
+
+.logo { text-align: center; }
+.logo .wf { font-size: 27px; font-weight: 800; color: #064e3b; letter-spacing: 2px; }
+.logo .wf span { color: #10b981; }
+.logo .sub { font-size: 13px; color: #64748b; margin-top: 5px; letter-spacing: 1px; }
+
+/* 吉祥物：空密码睁眼，输入闭眼 */
+.mascot { width: 108px; height: 108px; margin: 18px auto 6px; position: relative; }
+.mascot img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  border-radius: 50%; border: 3px solid #fff;
+  box-shadow: 0 10px 26px rgba(6,78,59,.2);
+  transition: opacity .16s ease;
+}
+.mascot .m-close { opacity: 0; }
+.mascot.closed .m-open { opacity: 0; }
+.mascot.closed .m-close { opacity: 1; }
+.mascot-tip { text-align: center; font-size: 12px; color: #94a3b8; margin-bottom: 20px; }
+
+.tabs { display: flex; margin-bottom: 20px; background: #e7f5ec; border-radius: 13px; padding: 4px; }
+.tab { flex: 1; text-align: center; padding: 10px 0; font-size: 14px; color: #64748b; cursor: pointer; border-radius: 10px; transition: all .2s; user-select: none; }
+.tab.on { background: #fff; color: #065f46; font-weight: 700; box-shadow: 0 3px 10px rgba(6,78,59,.1); }
+
+.field { margin-bottom: 15px; position: relative; }
+.field label { display: block; font-size: 13px; color: #475569; margin-bottom: 7px; font-weight: 500; }
+.field .wrap { position: relative; }
+.field .icon {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; color: #94a3b8; pointer-events: none;
+}
+.field input {
+  width: 100%; padding: 12px 14px 12px 42px;
+  border: 1.5px solid #d1fae5; border-radius: 13px;
+  font-size: 15px; outline: none; background: #fff;
+  transition: border .2s, box-shadow .2s;
+}
+.field input:focus { border-color: #34d399; box-shadow: 0 0 0 4px rgba(52,211,153,.14); }
+.field input::placeholder { color: #cbd5e1; }
+
+.err { font-size: 13px; color: #dc2626; min-height: 20px; margin: 2px 0 10px; text-align: center; font-weight: 500; }
+
+.btn {
+  width: 100%; padding: 13px 0; border: none; border-radius: 13px; cursor: pointer;
+  background: linear-gradient(135deg, #059669, #10b981 60%, #34d399);
+  color: #fff; font-size: 16px; font-weight: 700; letter-spacing: 3px;
+  box-shadow: 0 8px 22px rgba(16,185,129,.35);
+  transition: transform .15s, box-shadow .2s, opacity .15s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(16,185,129,.42); }
+.btn:active { transform: translateY(0); }
+.btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+.tip { text-align: center; margin-top: 18px; font-size: 13px; color: #94a3b8; }
+.tip a { color: #059669; cursor: pointer; text-decoration: none; font-weight: 600; }
+.tip a:hover { text-decoration: underline; }
+
+.foot { position: fixed; bottom: 22px; width: 100%; text-align: center; font-size: 12px; color: #94a3b8; z-index: 2; letter-spacing: .5px; }
+
+@media (max-width: 480px) {
+  .login-card { width: 92vw; padding: 30px 24px 26px; }
+}
+</style>
+</head>
+<body>
+<div class="login-card">
+  <div class="logo">
+    <div class="wf">WIN <span>FRUIT</span></div>
+    <div class="sub">团队站点账号登录</div>
+  </div>
+  <div class="mascot" id="mascot" title="看密码要用眼睛，输入时我会闭眼">
+    <img class="m-open" src="assets/mascot-open.png" alt="睁眼">
+    <img class="m-close" src="assets/mascot-close.png" alt="闭眼">
+  </div>
+  <div class="tabs">
+    <div class="tab on" id="tab-login">登录</div>
+    <div class="tab" id="tab-reg">注册</div>
+  </div>
+  <form id="login-form" autocomplete="off">
+    <div class="field">
+      <label>用户名</label>
+      <div class="wrap">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <input id="username" type="text" maxlength="20" placeholder="输入用户名" autocomplete="username">
+      </div>
+    </div>
+    <div class="field">
+      <label>密码</label>
+      <div class="wrap">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <input id="password" type="password" maxlength="64" placeholder="输入密码" autocomplete="current-password">
+      </div>
+    </div>
+    <div class="err" id="err"></div>
+    <button class="btn" id="submit-btn" type="submit">登 录</button>
+  </form>
+  <div class="tip" id="tip-line">还没有账号？<a id="switch-link">注册一个</a></div>
+</div>
+<div class="foot">© 2026 WIN FRUIT 版权所有</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let mode = 'login';
+
+const USERS_KEY = 'wf_users';
+const SESSION_KEY = 'wf_session';
+const ADMIN_HASH = '9f8c9af5f76c0b9dfedd1b2338106a14dd93c17173cffd55a2aaae37eedb721d';
+
+/* 初始化用户库：内置管理员（只存哈希，不存明文密码） */
+function loadUsers() {
+  try { return JSON.parse(localStorage.getItem(USERS_KEY)) || {}; } catch (e) { return {}; }
+}
+function saveUsers(users) { localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
+(function initAdmin() {
+  const users = loadUsers();
+  if (!users.admin) {
+    users.admin = { role: 'admin', passhash: ADMIN_HASH, bio: '站长' };
+    saveUsers(users);
+  }
+})();
+
+async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+/* 写入本地操作日志（管理员可在站点查看） */
+function pushLog(type, msg) {
+  try {
+    const logs = JSON.parse(localStorage.getItem('wf_logs')) || [];
+    logs.push({ t: new Date().toLocaleString('zh-CN', { hour12: false }), type: type, msg: msg });
+    if (logs.length > 300) logs.shift();
+    localStorage.setItem('wf_logs', JSON.stringify(logs));
+  } catch (e) {}
+}
+
+$('tab-login').onclick = () => setMode('login');
+$('tab-reg').onclick = () => setMode('reg');
+$('switch-link').onclick = () => setMode(mode === 'login' ? 'reg' : 'login');
+
+function setMode(m) {
+  mode = m;
+  $('tab-login').classList.toggle('on', m === 'login');
+  $('tab-reg').classList.toggle('on', m === 'reg');
+  $('submit-btn').textContent = m === 'login' ? '登 录' : '注 册';
+  $('tip-line').innerHTML = m === 'login'
+    ? '还没有账号？<a id="switch-link">注册一个</a>'
+    : '已有账号？<a id="switch-link">去登录</a>';
+  $('switch-link').onclick = () => setMode(mode === 'login' ? 'reg' : 'login');
+  $('err').textContent = '';
+}
+
+/* 密码输入时闭眼，空了睁眼 */
+$('password').addEventListener('input', function () {
+  document.getElementById('mascot').classList.toggle('closed', this.value.length > 0);
+});
+
+/* 调用本地服务 API（server.py 在跑时成功；Cloudflare 上没有后端会失败返回 null） */
+async function apiPost(path, body) {
+  try {
+    const r = await fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    return await r.json();
+  } catch (e) { return null; }
+}
+
+$('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = $('username').value.trim();
+  const password = $('password').value;
+  const err = $('err');
+  err.textContent = '';
+  if (!username || !password) { err.textContent = '用户名和密码不能为空'; return; }
+  const btn = $('submit-btn');
+  btn.disabled = true; btn.textContent = '处理中…';
+  try {
+    const passhash = await sha256Hex(username + ':' + password);
+    const users = loadUsers();
+    let ok = false, role = 'user', localMode = false;
+    if (mode === 'login') {
+      const r = await apiPost('/api/login', { username: username, passhash: passhash });
+      if (r === null) {
+        /* 无后端（Cloudflare 静态托管）：回退本地校验 */
+        localMode = true;
+        const u = users[username];
+        if (u && u.passhash === passhash) { ok = true; role = u.role || 'user'; }
+        if (!ok) err.textContent = '账号或密码错误';
+      } else if (r.ok) {
+        ok = true; role = r.role || 'user';
+      } else {
+        err.textContent = r.msg || '账号或密码错误';
+      }
+    } else {
+      if (username.length < 2) { err.textContent = '用户名至少 2 个字符'; }
+      else {
+        const r = await apiPost('/api/register', { username: username, passhash: passhash });
+        if (r === null) {
+          /* 无后端：回退本地注册（写入浏览器） */
+          localMode = true;
+          if (users[username]) { err.textContent = '该用户名已被注册'; }
+          else {
+            users[username] = { role: 'user', passhash: passhash, bio: '' };
+            saveUsers(users);
+            ok = true;
+          }
+        } else if (r.ok) {
+          ok = true; role = r.role || 'user';
+        } else {
+          err.textContent = r.msg || '注册失败';
+        }
+      }
+    }
+    if (ok) {
+      /* 回退模式才写 localStorage（服务端模式用 cookie，用户已写入 data/users.json） */
+      if (localMode) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify({ username: username, role: role, exp: Date.now() + 86400000 }));
+        pushLog(mode === 'login' ? '登录' : '注册', username + (mode === 'login' ? ' 登录成功' : ' 注册新账号'));
+      }
+      const from = new URLSearchParams(location.search).get('from') || 'index.html';
+      location.href = from;
+      return;
+    }
+  } catch (ex) {
+    err.textContent = '出了点问题，请重试';
+  }
+  btn.disabled = false; btn.textContent = mode === 'login' ? '登 录' : '注 册';
+});
+</script>
+</body>
+</html>
